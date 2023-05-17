@@ -22,7 +22,7 @@ export class BoardsService {
   하지만 현재는 데이터베이스를 사용하지 않기 때문에 임의로 유니크한 값을 줘야 합니다.
   이때 여러 방법을 쓸 수 있지만 uuid 모듈을 이용해서 유니크한 값을 주겠습니다.*/
 
-  createBoard(createBoardDto: CreateBoardDto) {
+  createBoard(createBoardDto: CreateBoardDto): Board {
     const { title, description } = createBoardDto;
 
     const board: Board = {
@@ -37,7 +37,24 @@ export class BoardsService {
     return board;
   }
 
-  getBoardById(id: string) {
+  getBoardById(id: string): Board {
     return this.boards.find((board) => id === board.id);
+  }
+
+  deleteBoard(id: string): void {
+    this.boards = this.boards.filter((board) => id === board.id);
+  }
+
+  updateBoardStatus(id: string): Board {
+    const board = this.getBoardById(id);
+    if (board.status === BoardStatus.PUBLIC) {
+      board.status = BoardStatus.PRIVATE;
+      return board;
+    }
+
+    if (board.status === BoardStatus.PRIVATE) {
+      board.status = BoardStatus.PUBLIC;
+      return board;
+    }
   }
 }

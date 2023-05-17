@@ -138,3 +138,7 @@ Built-in Pipes
   - ParseArrayPipe
   - ParseUUIDPipe
   - DefaultValuePipe
+
+필요한 모듈
+  class-validator, class-transformer
+  class-validator 문서 : https://github.com/typestack/class-validator#manual-validation
