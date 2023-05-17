@@ -36,4 +36,8 @@ export class BoardsService {
 
     return board;
   }
+
+  getBoardById(id: string) {
+    return this.boards.find((board) => id === board.id);
+  }
 }
