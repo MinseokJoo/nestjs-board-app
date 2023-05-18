@@ -52,16 +52,9 @@ export class BoardsService {
     this.boards = this.boards.filter((board) => board.id === found.id);
   }
 
-  updateBoardStatus(id: string): Board {
+  updateBoardStatus(id: string, status: BoardStatus): Board {
     const board = this.getBoardById(id);
-    if (board.status === BoardStatus.PUBLIC) {
-      board.status = BoardStatus.PRIVATE;
-      return board;
-    }
-
-    if (board.status === BoardStatus.PRIVATE) {
-      board.status = BoardStatus.PUBLIC;
-      return board;
-    }
+    board.status = status;
+    return board;
   }
 }
