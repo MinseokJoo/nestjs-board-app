@@ -169,3 +169,82 @@ transform() 메서드
 readonly class property
   접두사(prefix) readonly는 속성을 읽기 전용으로 만드는 데 사용됩니다.
   읽기 전용 멤버는 클래스 외부에서 액세스 할 수 있지만 해당 값은 변경할 수 없습니다.
+
+
+TypeORM 이란?
+  TypeORM은 node.js에서 실행되고 TypeScript로 작성된 객체 관경형 매퍼 라이브러리입니다.
+  TypeORM은 MySQL, PostgreSQL, MariaDB, SQLite, MS SQL Server, Oracle, SAP Hana 및 WebSQL과 같은 여러 데이터 베이스를 지원합니다.
+
+ORM(Object Relational Mapping) 이란?
+  객체와 관계형 데이터베이스의 데이터를 자동으로 변형 및 연결하는 작업입니다.
+  ORM을 이용한 개발은 객체와 데이터베이스의 변형에 유연하게 사용할 수 있습니다.
+
+TypeORM VS Pure Javascript
+  const boards = Board.find({title : 'hello', status : 'PUBLIC'})
+
+  db.query('SELECT * FROM boards WHERE title = "hello" and status = "PUBLIC"', (err, result) => {
+    if(err) {
+      throw new Error('Error')
+    }
+    boards = result.rows
+  })
+
+TypeORM 특징과 이점
+  모델을 기반으로 데이터베이스 테이블 체계를 자동으로 생성합니다.
+  데이터베이스에서 개체를 쉽게 삽입, 업데이트 및 삭제할 수 있습니다.
+  테이블 간의 매핑 (1:1, 1:n, n:m) 을 만듭니다.
+  간단한 CLI 명령을 제공합니다.
+
+  TypeORM은 간단한 코딩으로 ORM 프레임 워크를 사용하기 쉽습니다.
+  TypeORM은 다른 모듈과 쉽게 통합됩니다.
+
+TypeORM을 사용하기 위해서 설치해야 하는 모듈들
+  @nestjs/typeorm
+  - NsetJs에서 TypeORM을 사용하기 위해 연동시켜주는 모듈
+
+  typeorm
+  
+  pg
+  postgres 모듈
+
+  문서 : https://docs.nestjs.com/techniques/database
+
+Entitiy를 생성하는 이유
+  원래 ORM 없이 데이터베이스 테이블을 생성할 때는
+  CREATE TABLE board (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description VARCHAR(255) NOT NULL
+    ...
+  )
+  이런식으로 테이블을 생성하지만 TypeORM을 사용할 때는 데이터베이스 테이블로 변환되는 class 이기때문에
+  위처럼 하지 않고 class 를 생성한 후 그 안에 컬럼들을 정의해주면 된다.
+
+@Entitiy()
+  Entitiy() 데코레이터 클래스는 Board 클래스가 엔티티임을 나타내는 데 사용됩니다.
+  CREATE TABLE board 부분
+
+@PrimaryGeneratedColumn()
+  PrimaryGeneratedColumn() 데코레이터 클래스는 id 열이 Board 엔티티의 기본키 열임을 나타내는 데 사용됩니다.
+
+@Column()
+  Column() 데코레이터 클래스는 Board 엔티티의 title 및 description 과 같은 다른 열을 나타내는 데 사용됩니다.
+
+Repository 란?
+  레파지토리는 엔티티 개체와 함께 작동하며 엔티티 찾기, 삽입, 업데이터, 삭제 등을 처리합니다.
+  문서: http://typeorm.delightful.studio/classes/_repository_repository_.repository.html
+
+Repository 생성하기
+  1. 레파지토리 파일 생성하기
+  2. 생성한 파일에 레파지토리를 위한 클래스 생성하기
+    생성 시 Repository 클래스를 Extends 해줍니다. (Find, Insert, Delete 등 엔티티를 컨트롤 할 수 있습니다.)
+
+  @EntityRepository()
+    클래스를 사용자 정의(Custom) 저장소로 선언하는 데 사용됩니다.
+    사용자 지정 저장소는 일부 특정 엔티티를 관리하거나 일반 저장소 일 수 있습니다.
+
+    @EntityRepository()
+    export class BoardRepository extends Repository<Board>{}
+  
+  3. 생성한 Repository를 다른 곳에서도 사용할 수 있기 위해서 (Injectable) board.module에서 import 해줍니다.
+

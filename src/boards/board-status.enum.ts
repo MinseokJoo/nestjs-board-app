@@ -5,12 +5,12 @@
 // board status : 공개 게시물인지, 비공개 게시물인지의 상태 이외에는 나오면 안되기 때문에
 // 두가지의 상태만 나올 수 있게 하기 위해서 enumeration을 이용하겠습니다.
 
-export interface Board {
-  id: string;
-  title: string;
-  description: string;
-  status: BoardStatus;
-}
+// export interface Board {
+//   id: string;
+//   title: string;
+//   description: string;
+//   status: BoardStatus;
+// }
 
 export enum BoardStatus {
   PUBLIC = 'PUBLIC',
