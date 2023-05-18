@@ -248,3 +248,5 @@ Repository 생성하기
   
   3. 생성한 Repository를 다른 곳에서도 사용할 수 있기 위해서 (Injectable) board.module에서 import 해줍니다.
 
+async await 간단한 설명
+  await을 사용하면 데이터베이스 작업을 처리할 때 작업이 다 끝난 후에 받는다.

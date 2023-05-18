@@ -4,6 +4,7 @@ import { v1 as uuid } from 'uuid';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { BoardRepository } from './board.repository';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Board } from './board.entity';
 
 @Injectable()
 export class BoardsService {
@@ -11,6 +12,21 @@ export class BoardsService {
     // @InjectRepository를 이용해서 이 서비스에서 BoardRepository를 이용한다해서 넣어줌
     @InjectRepository(BoardRepository) private boardRepository: BoardRepository,
   ) {}
+
+  createBoard(createBoardDto: CreateBoardDto): Promise<Board> {
+    console.log(this.boardRepository);
+    return this.boardRepository.createBoard(createBoardDto);
+  }
+
+  async getBoardById(id: number): Promise<Board> {
+    const found = await this.boardRepository.findOne(id);
+
+    if (!found) {
+      throw new NotFoundException(`Can't find Board with id: ${id}`);
+    }
+
+    return found;
+  }
 
   // 로컬 메모리 환경
   // /*타입을 정의해주면 좋은 이유?
